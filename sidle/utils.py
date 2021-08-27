@@ -67,10 +67,13 @@ def password_with_asterisk(
     percentage: Optional[float] = 40
 ):
     
+    if len(password) <= 2:
+        return "*" * len(password)
+  
     percent = int(
         (percentage * len(password)) / 100.0
     )
-    
+        
     _ = "*" * (len(password) - percent)
     return "%s%s" % (_, password[-percent:])
     
