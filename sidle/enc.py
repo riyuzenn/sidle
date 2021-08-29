@@ -108,6 +108,9 @@ class SidleEncryption:
         """
 
         to_pad = string[0]
+        if to_pad == 0:
+            return string
+        
         return string[1:-to_pad]
 
     def pad_string(self, string, chunk_size=AES.block_size):
