@@ -33,13 +33,6 @@ def get_long_description():
 
     return readme
 
-def get_requirements():
-    
-    with open('requirements.txt', 'r') as f:
-        requirements = f.read().split('\n')
-    
-    return requirements
-
 setup(
     
     name="sidle", 
@@ -49,6 +42,6 @@ setup(
     author = 'Zenqi',
     license = 'MIT',
     version = __import__('sidle').__version__,
-    install_requires=get_requirements(),
+    install_requires=['pycryptodome>=3.10.1'],
     packages = [p for p in find_packages() if 'test' not in p]
 )
