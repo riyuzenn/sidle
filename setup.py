@@ -49,6 +49,6 @@ setup(
     author = 'Zenqi',
     license = 'MIT',
     version = __import__('sidle').__version__,
-    packages = [p for p in find_packages() if 'test' not in p],
     install_requires=get_requirements(),
+    packages = [p for p in find_packages() if 'test' not in p]
 )
