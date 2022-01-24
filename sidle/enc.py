@@ -32,6 +32,7 @@ from sidle.utils import (
 from typing import (
     Any
 )
+from sidle.errors import PasswordError
 
 class SidleEncryption:
     """
@@ -57,6 +58,9 @@ class SidleEncryption:
         given password.
         """
 
+        if string == " " or string == "":
+            raise ValueError('cannot be null')
+
         string = convert_bytes(string)
         
         key = self.__password_to_key(self.password)
@@ -78,7 +82,7 @@ class SidleEncryption:
         decryptor = AES.new(key, AES.MODE_CBC, IV)
 
         _str = decryptor.decrypt(encrypted_string[AES.block_size:])
-
+        
         try:
             string = convert_string(
                 self.unpad_string(_str)
@@ -86,6 +90,9 @@ class SidleEncryption:
             
         except Exception:
             string = self.unpad_string(_str)
+        
+        if string == "":
+            raise PasswordError
 
         return string
 
