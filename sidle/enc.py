@@ -128,11 +128,16 @@ class SidleEncryption:
         
         return string[1:-to_pad]
 
-    def pad_string(self, string, chunk_size=AES.block_size):
+    def pad_string(self, string, chunk_size=None):
         """
         Pad string the peculirarity that uses the first byte
         is used to store how much padding is applied
         """
+        if not chunk_size and AES != None:
+            chunk_size = AES.block_size
+        else:
+            raise RuntimeError('Module: `pycryptodome` is missing')
+            
         assert chunk_size  <= 256, 'We are using one byte to represent padding'
         to_pad = (chunk_size - (len(string) + 1)) % chunk_size
         return bytes([to_pad]) + string + bytes([0] * to_pad)
