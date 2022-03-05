@@ -20,9 +20,14 @@
 
 #: https://stackoverflow.com/questions/42568262
 
-from Crypto.Cipher import AES
-from Crypto.Hash import SHA256
-from Crypto import Random
+try:
+    from Crypto.Cipher import AES
+    from Crypto.Hash import SHA256
+    from Crypto import Random
+except ModuleNotFoundError:
+    AES = None
+    SHA256 = None
+    Random = None
 
 from sidle.utils import (
     convert_bytes,
@@ -49,6 +54,9 @@ class SidleEncryption:
         """
         Initialize SidleEncryption
         """
+        if not AES:
+            raise RuntimeError('Module: `pycryptodome` is missing.')
+        
         self.password = convert_bytes(password)
 
     def encrypt(self, string: str):
